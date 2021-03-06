@@ -25,13 +25,11 @@ impl Context {
         }
     }
     pub fn update(&mut self) {
-        match self.places[0] {
-            Place::Player(mut player) => player.update(),
-            _ => (),
+        if let Place::Player(mut player) = self.places[0] {
+            player.update();
         }
-        match self.places[1] {
-            Place::Player(mut player) => player.update(),
-            _ => (),
+        if let Place::Player(mut player) = self.places[1] {
+            player.update();
         }
         self.ball.update();
     }
