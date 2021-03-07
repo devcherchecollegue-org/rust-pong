@@ -11,7 +11,7 @@ use std::sync::{Arc, Mutex};
 async fn main() {
     logger::init();
 
-    let addr = std::env::var("SERVER_ADDR").expect("Server addr should be set in .env");
+    let addr = std::env::var("SERVER_ADDR").expect("SERVER_ADDR should be set in .env");
     let listener = tokio::net::TcpListener::bind(&addr)
         .await
         .expect("Can't listen");
