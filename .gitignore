@@ -34,3 +34,9 @@ Temporary Items
 debug/
 target/
 **/*.rs.bk
+
+# Rust
+.env
+Cargo.lock
+target/
+

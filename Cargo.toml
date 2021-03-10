@@ -1,0 +1,25 @@
+[package]
+name = "rust-pong"
+version = "0.1.0"
+authors = ["Pascal <pascal.chen@devling.xyz>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+dotenv = "0.15"
+env_logger = "0.8"
+futures-util = "0.3"
+log = "0.4"
+tokio = { version = "1.2", features = ["time", "macros", "rt-multi-thread"] }
+tokio-tungstenite = "0.14"
+tungstenite = "0.13"
+url = "2.2"
+
+[[bin]]
+name = "server"
+path = "src/server.rs"
+
+[[bin]]
+name = "client"
+path = "src/client.rs"
