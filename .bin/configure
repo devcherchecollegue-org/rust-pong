@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# script current directory
+SCD="$( cd "$(dirname "$0")" ; pwd -P )"
+
+# ensure that cargo-cmd is installed
+if ! cargo --list -v | grep bin/cargo-cmd; then
+  cargo install cargo-cmd
+fi
+
+# ensure that there is a pre-commit hook for validation
+if [ ! -f $SCD/../.git/hooks/pre-commit ]; then
+  cp $SCD/pre-commit $SCD/../.git/hooks/pre-commit
+fi
+
+# set default .env file
+if [ ! -f $SCD/../.env ]; then
+  cp $SCD/.env.example $SCD/../.env
+fi

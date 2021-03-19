@@ -5,7 +5,6 @@ authors = ["Pascal <pascal.chen@devling.xyz>"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
 dotenv = "0.15"
 env_logger = "0.8"
@@ -23,3 +22,9 @@ path = "src/server.rs"
 [[bin]]
 name = "client"
 path = "src/client.rs"
+
+[package.metadata.commands]
+'run:server'   = "cargo run --bin server"
+'run:client'   = "cargo run --bin client"
+'build:server' = "cargo build --bin server --release; ls target/release/server"
+'build:client' = "cargo build --bin client --release; ls target/release/client"
