@@ -92,8 +92,8 @@ fn setup(mut commands: Commands, mut materials: ResMut<Assets<ColorMaterial>>) {
 }
 
 fn main() {
-    App::build()
-        .insert_resource(ClearColor(Color::rgb(0.04, 0.04, 0.04)))
+    let mut app = App::build();
+    app.insert_resource(ClearColor(Color::rgb(0.04, 0.04, 0.04)))
         .insert_resource(WindowDescriptor {
             title: "Pong!".to_string(),
             width: 500.0,
@@ -105,6 +105,8 @@ fn main() {
         .add_system(position_translation.system())
         .add_system(size_scaling.system())
         .add_system(ball_movement.system())
-        .add_plugins(DefaultPlugins)
-        .run();
+        .add_plugins(DefaultPlugins);
+    #[cfg(target_arch = "wasm32")]
+    app.add_plugin(bevy_webgl2::WebGL2Plugin);
+    app.run();
 }
