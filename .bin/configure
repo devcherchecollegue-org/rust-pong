@@ -8,6 +8,11 @@ if ! cargo --list -v | grep bin/cargo-cmd; then
   cargo install cargo-cmd
 fi
 
+# ensure that cargo-make is installed
+if ! cargo --list -v | grep bin/cargo-make; then
+  cargo install cargo-make
+fi
+
 # ensure that there is a pre-commit hook for validation
 if [ ! -f $SCD/../.git/hooks/pre-commit ]; then
   cp $SCD/pre-commit $SCD/../.git/hooks/pre-commit

@@ -40,3 +40,6 @@ target/
 Cargo.lock
 target/
 
+#wasm generated
+web-root/wasm.js
+web-root/wasm_bg.wasm

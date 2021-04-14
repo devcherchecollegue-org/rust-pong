@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <style>
+      body {
+        margin:0;
+        background-color: #0a0a0a;
+      }
+      body::before {
+        content: "Loading ...";
+        color: #ddd;
+        margin: 45vh auto;
+        font-family: sans-serif;
+        display: block;
+        z-index: -1;
+        position: absolute;
+        width: 100vw;
+        text-align: center;
+        font-size: 5vh;
+      }
+      canvas {
+        background-color: white;
+        width: 100vw !important;
+        height: 100vh !important;
+      }
+    </style>
+  </head>
+  <script type="module">
+    import init from './wasm.js'
+    init().catch(e => {
+      if (e.message === "Using exceptions for control flow, don't mind me. This isn't actually an error!") console.debug(e.message)
+      else console.error(e)
+    });
+  </script>
+</html>

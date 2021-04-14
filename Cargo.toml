@@ -4,6 +4,26 @@ version = "0.1.0"
 authors = ["Pascal <pascal.chen@devling.xyz>"]
 edition = "2018"
 
+[features]
+default = [
+  # "bevy/bevy_audio",
+  # "bevy/bevy_dynamic_plugin",
+  # "bevy/bevy_gilrs",
+  # "bevy/hdr",
+  # "bevy/mp3",
+  "bevy/bevy_gltf",
+  "bevy/bevy_winit",
+  "bevy/render",
+  "bevy/x11",
+  "bevy/png",
+]
+native = [
+  "bevy/bevy_wgpu",
+  "tokio-tungstenite",
+  "tungstenite"
+]
+web = ["bevy_webgl2"]
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [dependencies]
 dotenv = "0.15"
@@ -11,9 +31,12 @@ env_logger = "0.8"
 futures-util = "0.3"
 log = "0.4"
 tokio = { version = "1.2", features = ["time", "macros", "rt-multi-thread"] }
-tokio-tungstenite = "0.14"
-tungstenite = "0.13"
+tokio-tungstenite = {version ="0.14", optional = true}
+tungstenite =  {version ="0.13", optional = true}
 url = "2.2"
+bevy = { version = "0.5.0", default-features = false }
+bevy_webgl2 = { version = "0.5.0", optional = true }
+rand = "0.8.3"
 
 [[bin]]
 name = "server"
@@ -23,8 +46,16 @@ path = "src/server.rs"
 name = "client"
 path = "src/client.rs"
 
+[[bin]]
+name = "front"
+path = "src/front.rs"
+
 [package.metadata.commands]
-'run:server'   = "cargo run --bin server"
-'run:client'   = "cargo run --bin client"
+'run:server' = "cargo run --bin server"
+'run:client' = "cargo run --bin client"
+'run:front' = "cargo make run"
+'run:web' = "cargo make serve"
 'build:server' = "cargo build --bin server --release; ls target/release/server"
 'build:client' = "cargo build --bin client --release; ls target/release/client"
+'build:front' = "cargo make build-native"
+'build:web' = "cargo make build-web"
