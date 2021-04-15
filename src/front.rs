@@ -1,16 +1,10 @@
-use bevy::{
-    prelude::*,
-    render::pass::ClearColor,
-    sprite::collide_aabb::{collide, Collision},
-};
-use std::num;
-use std::thread::spawn;
+use bevy::{prelude::*, render::pass::ClearColor};
 
 const ARENA_WIDTH: i32 = 10;
 const ARENA_HEIGHT: i32 = 10;
 
 struct Material {
-    mat : Handle<ColorMaterial>,
+    mat: Handle<ColorMaterial>,
 }
 
 #[derive(Default, Copy, Clone, PartialEq)]
@@ -60,16 +54,21 @@ fn position_translation(windows: Res<Windows>, mut q: Query<(&Position, &mut Tra
 }
 
 struct Ball;
-fn spawn_ball(commands: &mut Commands, material: Res<Material>) {
+fn spawn_ball(mut commands: Commands, material: Res<Material>) {
     commands
-        .spawn(SpriteBundle {
+        .spawn_bundle(SpriteBundle {
             material: material.mat.clone(),
             sprite: Sprite::new(Vec2::new(10.0, 10.0)),
             ..Default::default()
         })
-        .with(Ball)
-        .with(Position {x: 5., y: 5., vx: 0.08, vy: 0.03})
-        .with(Size::square(0.8));
+        .insert(Ball)
+        .insert(Position {
+            x: 5.,
+            y: 5.,
+            vx: 0.08,
+            vy: 0.03,
+        })
+        .insert(Size::square(0.8));
 }
 
 fn ball_movement(mut position: Query<&mut Position, With<Ball>>) {
@@ -80,29 +79,26 @@ fn ball_movement(mut position: Query<&mut Position, With<Ball>>) {
         if pos.y >= ARENA_HEIGHT as f32 - 1.0 || pos.y <= 0. {
             pos.vy = -pos.vy;
         }
-        
         pos.x += pos.vx;
         pos.y += pos.vy;
     }
 }
 
-fn setup(commands: &mut Commands, mut materials: ResMut<Assets<ColorMaterial>>) {
-    commands
-        .spawn(Camera2dBundle::default())
-        .insert_resource(Material {
-            mat: materials.add(Color::rgb(0.7, 0.7, 0.7).into()),
-        });
+fn setup(mut commands: Commands, mut materials: ResMut<Assets<ColorMaterial>>) {
+    commands.spawn_bundle(OrthographicCameraBundle::new_2d());
+    commands.insert_resource(Material {
+        mat: materials.add(Color::rgb(0.7, 0.7, 0.7).into()),
+    });
 }
-
 
 fn main() {
     App::build()
-        .add_resource(ClearColor(Color::rgb(0.04, 0.04, 0.04)))
-        .add_resource(WindowDescriptor {
-            title: "Pong!".to_string(), 
-            width: 500.0,                
-            height: 500.0,                
-            ..Default::default()        
+        .insert_resource(ClearColor(Color::rgb(0.04, 0.04, 0.04)))
+        .insert_resource(WindowDescriptor {
+            title: "Pong!".to_string(),
+            width: 500.0,
+            height: 500.0,
+            ..Default::default()
         })
         .add_startup_system(setup.system())
         .add_startup_stage("game_setup", SystemStage::single(spawn_ball.system()))
