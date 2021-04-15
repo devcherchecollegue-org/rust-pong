@@ -14,6 +14,8 @@ tokio = { version = "1.2", features = ["time", "macros", "rt-multi-thread"] }
 tokio-tungstenite = "0.14"
 tungstenite = "0.13"
 url = "2.2"
+bevy = "0.5.0"
+rand = "0.8.3"
 
 [[bin]]
 name = "server"
@@ -23,8 +25,14 @@ path = "src/server.rs"
 name = "client"
 path = "src/client.rs"
 
+[[bin]]
+name = "front"
+path = "src/front.rs"
+
 [package.metadata.commands]
-'run:server'   = "cargo run --bin server"
-'run:client'   = "cargo run --bin client"
-'build:server' = "cargo build --bin server --release; ls target/release/server"
-'build:client' = "cargo build --bin client --release; ls target/release/client"
+'run:server'    = "cargo run --bin server"
+'run:client'    = "cargo run --bin client"
+'run:front'     = "cargo +nightly run --bin front --features bevy/dynamic"
+'build:server'  = "cargo build --bin server --release; ls target/release/server"
+'build:client'  = "cargo build --bin client --release; ls target/release/client"
+'build:front'   = "cargo +nightly build --bin front --release; ls target/release/front"
