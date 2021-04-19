@@ -2,7 +2,7 @@
 
 ## Quick Start
 
-Configure project: run `.configure/run`  
+Configure project: run `.bin/configure`  
 This will install `cargo-cmd`, add a git hook for validation and add the `.env` file to the root of your project  
 Now you can configure the `.env` file as you want
 
